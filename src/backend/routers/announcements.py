@@ -110,9 +110,9 @@ def create_announcement(
     
     # Validate date formats
     try:
-        datetime.fromisoformat(expiration_date)
+        datetime.strptime(expiration_date, '%Y-%m-%d')
         if start_date:
-            datetime.fromisoformat(start_date)
+            datetime.strptime(start_date, '%Y-%m-%d')
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD")
     
@@ -166,7 +166,7 @@ def update_announcement(
     # Validate ObjectId
     try:
         obj_id = ObjectId(announcement_id)
-    except:
+    except (TypeError, ValueError):
         raise HTTPException(status_code=400, detail="Invalid announcement ID")
     
     # Check if announcement exists
@@ -183,9 +183,9 @@ def update_announcement(
     
     # Validate date formats
     try:
-        datetime.fromisoformat(expiration_date)
+        datetime.strptime(expiration_date, '%Y-%m-%d')
         if start_date:
-            datetime.fromisoformat(start_date)
+            datetime.strptime(start_date, '%Y-%m-%d')
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD")
     
@@ -234,7 +234,7 @@ def delete_announcement(
     # Validate ObjectId
     try:
         obj_id = ObjectId(announcement_id)
-    except:
+    except (TypeError, ValueError):
         raise HTTPException(status_code=400, detail="Invalid announcement ID")
     
     # Delete the announcement

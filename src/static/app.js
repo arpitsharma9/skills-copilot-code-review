@@ -346,6 +346,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Determine announcement status
+  function getAnnouncementStatus(startDate, expirationDate, today) {
+    if (expirationDate < today) {
+      return { status: "expired", statusText: "Expired" };
+    }
+    
+    if (!startDate || startDate <= today) {
+      return { status: "active", statusText: "Active" };
+    }
+    
+    return { status: "upcoming", statusText: "Upcoming" };
+  }
+
   // Display announcements in the management list
   function displayAnnouncementsList(announcements) {
     if (announcements.length === 0) {
@@ -365,29 +378,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const item = document.createElement("div");
       
       // Determine status
-      let status = "expired";
-      let statusText = "Expired";
-      
-      const startDate = announcement.start_date;
-      const expirationDate = announcement.expiration_date;
-      
-      if (expirationDate >= today) {
-        if (!startDate || startDate <= today) {
-          status = "active";
-          statusText = "Active";
-        } else {
-          status = "upcoming";
-          statusText = "Upcoming";
-        }
-      }
+      const { status, statusText } = getAnnouncementStatus(
+        announcement.start_date,
+        announcement.expiration_date,
+        today
+      );
 
       item.className = `announcement-item ${status}`;
       
       const datesHtml = [];
-      if (startDate) {
-        datesHtml.push(`<span>Start: ${formatDate(startDate)}</span>`);
+      if (announcement.start_date) {
+        datesHtml.push(`<span>Start: ${formatDate(announcement.start_date)}</span>`);
       }
-      datesHtml.push(`<span>Expires: ${formatDate(expirationDate)}</span>`);
+      datesHtml.push(`<span>Expires: ${formatDate(announcement.expiration_date)}</span>`);
       
       item.innerHTML = `
         <div class="announcement-content">
