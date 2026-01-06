@@ -136,7 +136,8 @@ def create_announcement(
     
     result = announcements_collection.insert_one(announcement)
     announcement["id"] = str(result.inserted_id)
-    del announcement["_id"] if "_id" in announcement else None
+    if "_id" in announcement:
+        del announcement["_id"]
     
     return announcement
 
