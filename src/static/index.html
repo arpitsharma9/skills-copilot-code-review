@@ -12,9 +12,7 @@
     />
   </head>
   <body>
-    <div class="announcement-banner">
-      📢 Activity registration is open until the end of the month. Don't miss your spot!
-    </div>
+    <div id="announcement-banner-container"></div>
     <header>
       <h1>Mergington High School</h1>
       <h2>Extracurricular Activities</h2>
@@ -26,7 +24,13 @@
           </button>
           <div id="user-info" class="hidden">
             <span id="display-name"></span>
-            <button id="logout-button">Logout</button>
+            <div class="header-buttons">
+              <button id="manage-announcements-button" class="icon-button hidden">
+                <span>📢</span>
+                <span>Announcements</span>
+              </button>
+              <button id="logout-button">Logout</button>
+            </div>
           </div>
         </div>
       </div>
@@ -136,6 +140,48 @@
         <div id="login-message" class="hidden message"></div>
       </div>
     </div>
+
+    <!-- Announcement Management Dialog -->
+    <dialog id="announcement-dialog" class="announcement-dialog">
+      <div class="dialog-content">
+        <div class="dialog-header">
+          <h2>Manage Announcements</h2>
+          <button class="close-button" id="close-announcement-dialog">&times;</button>
+        </div>
+        <div class="dialog-body">
+          <div id="announcements-list"></div>
+          <button id="add-announcement-btn" class="primary-button">Add New Announcement</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Announcement Form Dialog -->
+    <dialog id="announcement-form-dialog" class="announcement-dialog">
+      <div class="dialog-content">
+        <div class="dialog-header">
+          <h2 id="form-title">Add Announcement</h2>
+          <button class="close-button" id="close-form-dialog">&times;</button>
+        </div>
+        <form id="announcement-form" class="announcement-form">
+          <div class="form-group">
+            <label for="announcement-message">Message:</label>
+            <textarea id="announcement-message" required placeholder="Enter announcement message"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="announcement-start-date">Start Date (optional):</label>
+            <input type="date" id="announcement-start-date" />
+          </div>
+          <div class="form-group">
+            <label for="announcement-expiration-date">Expiration Date:</label>
+            <input type="date" id="announcement-expiration-date" required />
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="primary-button">Save</button>
+            <button type="button" class="secondary-button" id="cancel-form">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
 
     <script src="app.js"></script>
   </body>
